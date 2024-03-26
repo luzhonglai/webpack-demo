@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: luzhonglai
  * @Date: 2024-03-26 11:17:57
  * @LastEditors: luzhonglai
@@ -7,57 +7,64 @@
  * @FilePath: /webpack-demo/webpack.config.js
  */
 
-
-const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader/dist/index')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const path = require("path");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader/dist/index");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const config = {
-  mode: 'development',
-  entry: './src/main.ts',
+  mode: "development",
+  entry: "./src/main.ts",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[hash].js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[hash].js",
   },
   resolve: {
     alias: {
-      '@': path .resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
-    extensions:['.vue','.ts','.js']
+    extensions: [".js", ".json", ".ts", ".tsx"], //识别后缀
   },
-  stats: 'errors-only',
-  module:{
-    rules:[
+  stats: "errors-only",
+  module: {
+    rules: [
       {
-        test: /\.vue$/,
-        use: 'vue-loader',
+        test: /\.vue$/, //解析vue 模板
+        use: "vue-loader",
       },
       {
-        test: /\.less$/,
-        use:['css-loader', 'less-loader','style-loader'],
+        test: /\.less$/, //解析 less
+        use: ["style-loader", "css-loader", "less-loader"],
       },
-      // {
-      //   test: /\.ts$/,
-      //   loader: 'ts-loader',
-      //   // options: {
-      //   //   configFile: path.resolve(process.cwd(), 'tsconfig.json'),
-      //   //   appendTsSuffix: [/\.vue$/]
-      //   // },
-      // }
-    ]
+      {
+        test: /\.css$/, //解析css
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.ts$/, //解析ts
+        loader: "ts-loader",
+        options: {
+          configFile: path.resolve(process.cwd(), "tsconfig.json"),
+          appendTsSuffixTo: [/\.vue$/],
+        },
+      },
+    ],
+  },
+  devServer: {
+    port: 8080,
+    hot: true,
+    open: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new htmlWebpackPlugin({template: './public/index.html'}),
+    new htmlWebpackPlugin({ template: "./public/index.html" }),
     new VueLoaderPlugin(),
     new FriendlyErrorsWebpackPlugin({
-      compilationSuccessInfo:{
-        messages: ['项目运行地址----> http://localhost:8080']
-      }
-    })
-    
-   ]
-}
+      compilationSuccessInfo: {
+        messages: ["项目运行地址----> http://localhost:8080"],
+      },
+    }),
+  ],
+};
 
-module.exports = config
+module.exports = config;
