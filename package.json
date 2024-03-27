@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@vue/compiler-sfc": "^3.4.21",
+    "ant-design-vue": "^4.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.10.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
